@@ -6,6 +6,7 @@ class CalcController {
         this._timeEl = document.querySelector("#hora");
         this._currentDate;
         this.initialize();
+        this.initButtonsEvent();
     }
 
     initialize() {
@@ -14,6 +15,16 @@ class CalcController {
         setInterval(() => {
             this.setDisplayDateTime();
         }, 1000);
+    }
+
+    initButtonsEvent() {
+        let buttons = document.querySelectorAll('#buttons > g, #parts > g');
+
+        buttons.forEach((btn, index) => {
+            btn.addEventListener('click', event => {
+                console.log(btn.className.baseVal.replace("btn-", ""));
+            });
+        })
     }
 
     setDisplayDateTime() {
@@ -59,5 +70,3 @@ class CalcController {
 }
 
 // _ (underline) = significa um atributo privado
-// toLocaleDateString e toLocaleTimeString
-// manipula o DOM e utiliza a classe Date
