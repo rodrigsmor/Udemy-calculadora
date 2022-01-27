@@ -17,13 +17,23 @@ class CalcController {
         }, 1000);
     }
 
+    addEventListenerAll(element, events, fn) {
+        events.split(' ').forEach(event => {
+            element.addEventListener(event, fn);
+        });
+    }
+
     initButtonsEvent() {
         let buttons = document.querySelectorAll('#buttons > g, #parts > g');
 
         buttons.forEach((btn, index) => {
-            btn.addEventListener('click', event => {
+            this.addEventListenerAll(btn, 'click drag', event => {
                 console.log(btn.className.baseVal.replace("btn-", ""));
             });
+
+            this.addEventListenerAll(btn, 'mouseover mouseup mousedown', event => {
+                btn.style.cursor = 'pointer';
+            })
         })
     }
 
