@@ -8,7 +8,6 @@ class CalcController {
         this._currentDate;
         this.initialize();
         this.initButtonsEvent();
-        this.execBtn();
     }
 
     initialize() {
@@ -21,7 +20,7 @@ class CalcController {
 
     addEventListenerAll(element, events, fn) {
         events.split(' ').forEach(event => {
-            element.addEventListener(event, fn);
+            element.addEventListener(event, fn, false);
         });
     }
 
@@ -50,15 +49,13 @@ class CalcController {
 
         if(this._operation.length > 3) {
             this.calc();
-
-            console.log(this._operation);
         }
     }
 
     calc() {
         let last = this._operation.pop();
 
-        let result = this._operation.join("");
+        let result = eval(this._operation.join(""));
 
         this._operation = [result, last];
 
@@ -68,7 +65,7 @@ class CalcController {
     setLastNumberToDisplay() {
         let lastNumber;
 
-        for(let i = this._operation.length; i <= 0; i++) {
+        for(let i = this._operation.length -1; i >= 0; i--) {
             if(!this.isOperator(this._operation[i])) {
                 lastNumber = this._operation[i];
                 break;
@@ -100,6 +97,7 @@ class CalcController {
             }
         }
 
+        alert(this._operation);
         console.log(this._operation);
     }
 
