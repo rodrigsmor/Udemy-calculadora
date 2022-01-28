@@ -13,6 +13,28 @@ class CalcController {
         this.initKeyboard();
     }
 
+    copyToClipBoard() {
+        let input = document.createElement('input');
+
+        input.value = this.displayCalc;
+
+        document.body.appendChild(input);
+
+        input.select();
+
+        document.execCommand('copy');
+
+        input.remove();
+    }
+
+    pasteFromClipboard() {
+        document.addEventListener('paste', event => {
+            let text = event.clipboardData.getData('text');
+
+            this.displayCalc = parseFloat(text);
+        });
+    }
+
     initialize() {
         this.setDisplayDateTime();
         
@@ -21,6 +43,7 @@ class CalcController {
         }, 1000);
 
         this.setLastNumberToDisplay();
+        this.pasteFromClipboard();
     }
 
     initKeyboard() {
@@ -63,6 +86,10 @@ class CalcController {
                 case '8':
                 case '9':
                     this.addOperation(parseFloat(event.key));
+                break;
+
+                case 'c':
+                    if(event.ctrlKey) this.copyToClipBoard();
                 break;
             }
         });
